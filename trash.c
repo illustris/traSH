@@ -19,15 +19,15 @@ int logz(char **);
 int unlog(char **);
 int viewcmdlog(char **);
 int viewoutlog(char **);
-int changedir(char **);
+int cd(char **);
 int external(char **);
 int do_command(char **, int );
 void tee(const char*); 
 
-int changedir(char **arg)
+int cd(char **arg)
 {
 	if (arg[1] == NULL)
-		fprintf(stderr, "\"changedir\" expects arguments\n");
+		fprintf(stderr, "\"cd\" expects arguments\n");
 	else if (chdir(arg[1]) != 0)//chdir defined in unistd, changes current working dir to args[1]
 		perror("chdir failed");//defined in stdio, prints str : error
 	return 1;
@@ -171,8 +171,8 @@ int run(char **arg)
 {
 	if(arg[0] == NULL)
 		return 1;
-	else if(strcmp(arg[0],"changedir")==0)
-		return changedir(arg);
+	else if(strcmp(arg[0],"cd")==0)
+		return cd(arg);
 	else if(strcmp(arg[0],"exit")==0)
 		return ext(arg);
 	else if(strcmp(arg[0],"log")==0)
