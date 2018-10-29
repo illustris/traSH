@@ -14,7 +14,6 @@ int active=1;
 int logging=0;
 int pipc;
 //int isfile(char *path);
-int entry(char **);
 int ext(char **);
 int logz(char **);
 int unlog(char **);
@@ -89,24 +88,6 @@ int unlog(char **arg)
 int ext(char **arg)
 {
 	active=0;
-}
-
-int entry(char **arg)
-{
-	if(active)
-	{
-		printf("Already authenticated\n");
-		return 0;
-	}
-	printf("Authentication required. Enter password:\n");
-	char pass[80];
-	gets(pass);
-	if(strcmp(pass, "password")==0)
-	{
-		active=1;
-		return 1;
-	}
-	return 0;
 }
 
 char *in(void)//reads input to buffer
@@ -188,19 +169,12 @@ char **split(char *input)
 
 int run(char **arg)
 {
-	if(!active&&strcmp(arg[0],"entry")!=0)
-	{
-		printf("Command line interpretter not started\n");
-		return 1;
-	}
-	else if(arg[0] == NULL)
+	if(arg[0] == NULL)
 		return 1;
 	else if(strcmp(arg[0],"changedir")==0)
 		return changedir(arg);
 	else if(strcmp(arg[0],"exit")==0)
 		return ext(arg);
-	else if(strcmp(arg[0],"entry")==0)
-		return entry(arg);
 	else if(strcmp(arg[0],"log")==0)
 		return logz(arg);
 	else if(strcmp(arg[0],"unlog")==0)
